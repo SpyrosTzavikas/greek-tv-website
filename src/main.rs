@@ -2,21 +2,24 @@
 #![plugin(rocket_codegen)]
 
 extern crate rocket;
-#[macro_use] extern crate rocket_contrib;
 
-use rocket_contrib::{Json, Value};
+use std::io;
+use std::path::{Path, PathBuf};
 
+use rocket::response::NamedFile;
 
 #[get("/")]
-fn read() -> Json<Value> {
-    Json(json!([
-        "hero 1",
-        "hero 2",
-    ]))
+fn index() -> io::Result<NamedFile> {
+    NamedFile::open("ui/dist/index.html")
+}
+
+#[get("/<file..>")]
+fn files(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("ui/dist/").join(file)).ok()
 }
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![read])
+        .mount("/", routes![index, files])
         .launch();
 }
