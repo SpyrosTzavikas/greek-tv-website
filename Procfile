@@ -1,1 +1,1 @@
-web: ROCKET_PORT=$PORT target/release/greek_tv_website
+web: ROCKET_PORT=$PORT ROCKET_ENV=prod ./target/release/greek_tv_website
