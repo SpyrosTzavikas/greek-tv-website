@@ -22,6 +22,18 @@ export default class HLSSource extends Component {
     }
   }
 
+  reloadNewSource() {
+    const { src, video } = this.props;
+    // load hls video source base on hls.js
+    if (Hls.isSupported()) {
+      this.hls.loadSource(src);
+      this.hls.attachMedia(video);
+      this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play();
+      });
+    }
+  }
+
   componentWillUnmount() {
     // destroy hls video source
     if (this.hls) {
