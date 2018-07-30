@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Player } from 'video-react';
 import HLSSource from './HLSSource';
 import Select from 'react-select';
+import "../node_modules/video-react/dist/video-react.css"; // import css
 
 
 export default class StreamingVideoPlayer extends Component {
